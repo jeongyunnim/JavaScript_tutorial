@@ -1,15 +1,57 @@
 const defaultResult = 0;
-
 let currentResult = defaultResult;
+let logEntries = []
 
-function add(num1, num2)
+function getUserInput()
 {
-    const result = num1 + num2;
-    alert('the result is ' + result);
+    return (parseInt(userInput.value));
 }
 
-add(currentResult, 2);
+function createOutput(operator, rhs, lhs)
+{
+    const description = `${rhs} ${operator} ${lhs}`
+    outputResult(currentResult, description);
+}
 
-currentResult += 30;
+function add()
+{
+    const input = getUserInput();
+    const initialResult = currentResult;
+    createOutput('+', currentResult, input);
+    currentResult += input;
+    const logEntry = 
+    {
+        operation:'ADD',
+        rhs:initialResult,
+        lhs:input,
+        result:currentResult,
+    };
+    logEntries.push(logEntry);
+    console.log(logEntries);
+}
 
-outputResult(currentResult, '');
+function subtract()
+{
+    const input = getUserInput();
+    createOutput('-', currentResult, input);
+    currentResult -= input;
+}
+
+function multiply()
+{
+    const input = getUserInput();
+    createOutput('*', currentResult, input);
+    currentResult *= input;
+}
+
+function divide()
+{
+    const input = getUserInput();
+    createOutput('/', currentResult, input);
+    currentResult /= input;
+}
+
+addBtn.addEventListener('click', add);
+divideBtn.addEventListener('click', divide);
+multiplyBtn.addEventListener('click', multiply);
+subtractBtn.addEventListener('click', subtract);
