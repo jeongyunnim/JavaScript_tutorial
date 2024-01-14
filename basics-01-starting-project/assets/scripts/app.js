@@ -13,42 +13,51 @@ function createOutput(operator, rhs, lhs)
     outputResult(currentResult, description);
 }
 
+function writeToLog(operator, rhs, lhs, result)
+{
+    const logEntry = {
+        _operation:operator,
+        _rhs:rhs,
+        _lhs:lhs,
+        _result:result,
+    };
+    console.log(logEntry._operation);
+}
+
 function add()
 {
     const input = getUserInput();
     const initialResult = currentResult;
     createOutput('+', currentResult, input);
     currentResult += input;
-    const logEntry = 
-    {
-        operation:'ADD',
-        rhs:initialResult,
-        lhs:input,
-        result:currentResult,
-    };
-    logEntries.push(logEntry);
-    console.log(logEntries);
+    writeToLog('ADD', initialResult, input, currentResult);
 }
 
 function subtract()
 {
     const input = getUserInput();
+    const initialResult = currentResult;
     createOutput('-', currentResult, input);
     currentResult -= input;
+    writeToLog('SUBTRACT', initialResult, input, currentResult);
 }
 
 function multiply()
 {
     const input = getUserInput();
+    const initialResult = currentResult;
     createOutput('*', currentResult, input);
     currentResult *= input;
+    writeToLog('MULTIPLY', initialResult, input, currentResult);
 }
 
 function divide()
 {
     const input = getUserInput();
+    const initialResult = currentResult;
     createOutput('/', currentResult, input);
     currentResult /= input;
+    writeToLog('DIVIDE', initialResult, input, currentResult);
 }
 
 addBtn.addEventListener('click', add);
