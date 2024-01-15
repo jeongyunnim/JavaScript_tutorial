@@ -24,40 +24,48 @@ function writeToLog(operator, rhs, lhs, result)
     console.log(logEntry._operation);
 }
 
-function add()
+function calculate(operator)
 {
     const input = getUserInput();
     const initialResult = currentResult;
-    createOutput('+', currentResult, input);
-    currentResult += input;
-    writeToLog('ADD', initialResult, input, currentResult);
+    if (operator === '+')
+    {
+        currentResult += input;
+    }
+    else if (operator === '-')
+    {
+        currentResult -= input;
+    }
+    else if (operator === '/')
+    {
+        currentResult /= input;
+    }
+    else
+    {
+        currentResult *= input;
+    }
+    createOutput(operator, initialResult, input);
+    writeToLog(operator, initialResult, input, currentResult);
+}
+
+function add()
+{
+    calculate('+');
 }
 
 function subtract()
 {
-    const input = getUserInput();
-    const initialResult = currentResult;
-    createOutput('-', currentResult, input);
-    currentResult -= input;
-    writeToLog('SUBTRACT', initialResult, input, currentResult);
+    calculate('-');
 }
 
 function multiply()
 {
-    const input = getUserInput();
-    const initialResult = currentResult;
-    createOutput('*', currentResult, input);
-    currentResult *= input;
-    writeToLog('MULTIPLY', initialResult, input, currentResult);
+    calculate('*');
 }
 
 function divide()
 {
-    const input = getUserInput();
-    const initialResult = currentResult;
-    createOutput('/', currentResult, input);
-    currentResult /= input;
-    writeToLog('DIVIDE', initialResult, input, currentResult);
+    calculate('/');
 }
 
 addBtn.addEventListener('click', add);
