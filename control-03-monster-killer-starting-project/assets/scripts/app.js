@@ -37,25 +37,25 @@ function writeToLog(event, value, monsterHealth, playerHearlth)
         finalMonsterHealth: monsterHealth,
         finalPlayerHealth: playerHearlth,
     }
-    if (event === LOG_EVENT_GAME_OVER)
+    switch(event) 
     {
-        logEntry.taget = 'GAME';
-    }
-    else if (event === LOG_EVENT_MONSTER_ATTACK)
-    {
-        logEntry.taget = 'PLAYER';
-    }
-    else if (event === LOG_EVENT_PLAYER_ATTACK)
-    {
-        logEntry.taget = 'MONSTER';
-    }
-    else if (event === LOG_EVENT_PLAYER_HEAL)
-    {
-        logEntry.taget = 'PLAYER';
-    }
-    else if (event === LOG_EVENT_PLAYER_STRONG_ATTACK)
-    {
-        logEntry.taget = 'MONSTER';
+        case (LOG_EVENT_GAME_OVER):
+            logEntry.taget = 'GAME';
+            break ;
+        case (LOG_EVENT_MONSTER_ATTACK):
+            logEntry.taget = 'PLAYER';
+            break ;
+        case (LOG_EVENT_PLAYER_ATTACK):
+            logEntry.taget = 'MONSTER';
+            break ;
+        case (LOG_EVENT_PLAYER_HEAL):
+            logEntry.taget = 'PLAYER';
+            break ;
+        case (LOG_EVENT_PLAYER_STRONG_ATTACK):
+            logEntry.taget = 'MONSTER';
+            break ;
+        default:
+            logEntry = {};
     }
     battleLog.push(logEntry);
 }
@@ -105,19 +105,9 @@ function endRound()
 
 function attackMonster(mode)
 {
-    let maxDamage;
-    let event;
+    let maxDamage = (mode === MODE_ATTACK) ? ATTACK_VALUE : STRONG_ATTACK_VALUE;
+    let event = (mode === MODE_ATTACK) ? LOG_EVENT_PLAYER_ATTACK : LOG_EVENT_PLAYER_STRONG_ATTACK;
 
-    if (mode === MODE_ATTACK)
-    {
-        maxDamage = ATTACK_VALUE;
-        event = LOG_EVENT_PLAYER_ATTACK;
-    }
-    else
-    {
-        maxDamage = STRONG_ATTACK_VALUE
-        event = LOG_EVENT_PLAYER_STRONG_ATTACK;
-    }
     const PlayerDamage = dealMonsterDamage(maxDamage);
     currentMonsterHealth -= PlayerDamage;
     writeToLog(event, PlayerDamage, currentMonsterHealth, currentPlayerHealth);
@@ -154,7 +144,16 @@ function healPlayerHandler()
 
 function printLogHandler()
 {
-    console.log(battleLog);
+    let i = 0;
+    for (logEntry of battleLog)
+    {
+        console.log(`#${i}`);
+        for (key in logEntry)
+        {
+            console.log(`${key}: ${logEntry[key]}`);
+        }
+        i++;
+    }
 }
 
 attackBtn.addEventListener('click', attackHandler);
