@@ -60,9 +60,28 @@ startGameBtn.addEventListener('click', () =>
 	gameIsRunning = true;
 	console.log("Game is starting...");
 	const playerSelction = getPlayerChoice();
-	console.log('Your choice is', playerSelction);
 	const computerSelction = getComputerChoice();
-	console.log('Computer\'s choice is', computerSelction);
-	alert(`The Winner is ${getWinner(playerSelction, computerSelction)}`);
+	const winner = getWinner(playerSelction, computerSelction);
+	let message = `You picked ${playerSelction} Computer picked ${computerSelction} `;
+	if (winner === RESULT_DRAW)
+	{
+		message += 'had a draw.';
+	}
+	else if (winner === RESULT_PLAYER)
+	{
+		message += 'won.';
+	}
+	else
+	{
+		message += 'lost.'
+	}
+	alert(message);
+	gameIsRunning = false;
 });
+
+// game 과 관련 없음.
+
+const sumUp = (a, b, c, d) => {
+	
+}
 
