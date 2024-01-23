@@ -120,7 +120,7 @@ input:focus {
   display: none;
 }
 
-.modal.visible {
+.modal .visible {
   display: block;
   animation: fade-slide-in 0.3s ease-out forwards;
 }
