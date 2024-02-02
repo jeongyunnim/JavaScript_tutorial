@@ -14,9 +14,6 @@ class Product {
 
 class ShoppingCart {
 	items = [];
-	cartItems;
-	totalOutput;
-	totalAmount;
 
     set cartItems(value) {
         this.items = value;
