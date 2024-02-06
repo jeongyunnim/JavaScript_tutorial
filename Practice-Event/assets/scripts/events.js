@@ -1,4 +1,3 @@
-const buttons = document.querySelectorAll('button');
 
 // button.onclick = function() {
 
@@ -37,4 +36,14 @@ const form = document.querySelector('form');
 form.addEventListener('submit', event => {
   event.preventDefault(); // 브라우저의 기본 동작을 막는다.
   console.log(event);
-}) //submit은 드문 이벤트이기 때문에 모든 DOM요소에 존재하지 않는다.
+}); //submit은 드문 이벤트이기 때문에 모든 DOM요소에 존재하지 않는다.
+
+const div = document.querySelector('div');
+div.addEventListener('click', event => {
+  console.log('DIV EVENT!', event);
+}, true);
+
+const button = document.querySelector('button');
+button.addEventListener('click', event => {
+  console.log('BUTTON EVENT!', event);
+});
