@@ -1,5 +1,16 @@
 const button = document.querySelector('button');
 
+const getPosition = (opts) => {
+    const promise = new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(success => {
+            resolve(success);
+        }, error => {
+            reject(error);
+        }, opts);
+    });
+    return promise;
+}
+
 const setTimer = (duration) => {
     const promise = new Promise((resolve, reject) => {
         // 브라우저는 프로미스가 생성되는 즉시 함수를 실행하고 프로미스를 resolve와 reject로 넘긴다.
@@ -11,21 +22,19 @@ const setTimer = (duration) => {
 };
 
 function trackUserHandler() {
-    navigator.geolocation.getCurrentPosition(
-        posData => {
-            setTimer(2000).then(data => {
-                console.log(data, posData);
-            });
-        },
-        error => {
-            setTimer(2000).then(data => {
-                console.log(data, error);
-            });
-        }
-    );
-    setTimeout(() => {
-        console.log('Timer done!');
-    }, 0);
-	console.log('Getting Positions...');
+    let positionData;
+    getPosition().then((posData) => {
+        positionData = posData
+        return (setTimer(2000)); // setTimer 내부에서 position 객채를 반환하기 때문에 가능.
+    })
+    .then((data) => {
+        console.log(data, positionData);
+    }, err => {
+        console.log(err);
+    });
+    // setTimer(1000).then(() => {
+    //     console.log('Timer done!');
+    // });
+	// console.log('Getting Positions...');
 }
 button.addEventListener('click', trackUserHandler);
