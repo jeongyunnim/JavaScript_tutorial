@@ -10,7 +10,17 @@ function sendHttpRequest(method, url, data = null) {
 		xhr.open(method, url);
 		xhr.responseType = 'json';
 		xhr.onload = function() {
-			resolve(xhr.response);
+			if (200 <= xhr.status && xhr.status < 300)
+			{
+				resolve(xhr.response);
+			}
+			else
+			{
+				reject(new Error('HTTP Request Error'));
+			}
+		}
+		xhr.onerror = function() {
+			reject(new Error('Failed to send request'));
 		}
 		
 		xhr.send(JSON.stringify(data));
@@ -19,7 +29,7 @@ function sendHttpRequest(method, url, data = null) {
 }
 
 async function fetchPosts() {
-	const reponseData = await sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/posts');
+	const reponseData = await sendHttpRequest('GET', 'https://jsonplaceholder.typicode.com/poss');
 	for (const post of reponseData)
 	{
 		const postEl = document.importNode(postsTemplate.content, true);
